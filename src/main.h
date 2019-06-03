@@ -9,6 +9,8 @@
 #include <GL/glut.h>
 #include "JSONReader.h"
 #include "Scene.h"
+#include "Texture.h"
+#include "Window.h"
 
 using namespace std;
 using namespace rapidjson;

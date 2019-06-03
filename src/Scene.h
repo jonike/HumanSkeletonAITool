@@ -12,10 +12,7 @@
 #include <string>
 #include "Camera.h"
 #include "Viewport.h"
-#include "Window.h"
 #include "JSONReader.h"
-
-using namespace std;
 
 class Scene
 {

@@ -4,6 +4,7 @@ float angle = 0.0f;
 
 Window* window;
 Scene* scene;
+Texture* texture;
 
 void changeSize(int w, int h) {
 
@@ -30,11 +31,20 @@ void renderScene(void) {
 
 	glRotatef(angle, 0.0f, 1.0f, 0.0f);
 
-	glColor3f(1.0f,0.0f,0.0f);
-	glBegin(GL_TRIANGLES);
-		glVertex3f(-2.0f,-2.0f, 0.0f);
-		glVertex3f( 2.0f, 0.0f, 0.0);
-		glVertex3f( 0.0f, 2.0f, 0.0);
+	//glColor3f(1.0f,1.0f,1.0f);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture->texture);
+
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glBegin(GL_TRIANGLE_STRIP);
+		glTexCoord2f(0.0f, 1.0f);
+		glVertex3f(-1.0f, 1.0f, 0.0);
+		glTexCoord2f(0.0f, 0.0f);
+		glVertex3f(-1.0f,-1.0f, 0.0f);
+		glTexCoord2f(1.0f, 1.0f);
+		glVertex3f( 1.0f, 1.0f, 0.0);
+		glTexCoord2f(1.0f, 0.0f);
+		glVertex3f( 1.0f, -1.0f, 0.0);
 	glEnd();
 
 	angle+=0.1f;
@@ -64,6 +74,9 @@ int main(int argc, char** argv)
 		scene = new Scene();
 		scene->Init(scenefile);
 	}
+
+	texture = new Texture();
+	texture->Init(scenefile);
 
     window->Reshape(changeSize);
     window->Display(renderScene);
