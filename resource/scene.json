@@ -34,6 +34,11 @@
 			"aspect": 1.333333,
 			"zNear": 0.1,
 			"zFar": 100.0
-		}
+		},
+		"sceneobjects": [{
+			"name": "ImageRectangle",
+			"texturefile": "000342_mpii_test_000000.jpg",
+			"geometryfile": "Image.obj"
+		}]
 	}
 }

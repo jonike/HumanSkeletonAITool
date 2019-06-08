@@ -33,34 +33,33 @@ Window::~Window()
 		delete[] size;
 }
 
-void Window::Init(Document& scenefile)
+void Window::Init(const Value& scenefile)
 {
 	int x = 200;
 	int y = 200;
 	int width = 640;
 	int height = 480;
 
-	scenefile["window"].GetObject();
 	cout << "Window = {" << endl;
 
-	if(scenefile["window"].HasMember("x"))
+	if(scenefile.HasMember("x"))
 	{
-		x = scenefile["window"]["x"].GetInt();
+		x = scenefile["x"].GetInt();
 		cout << "x = " << x << endl;
 	}
-	if(scenefile["window"].HasMember("y"))
+	if(scenefile.HasMember("y"))
 	{
-		y = scenefile["window"]["y"].GetInt();
+		y = scenefile["y"].GetInt();
 		cout << "y = " << y << endl;
 	}
-	if(scenefile["window"].HasMember("width"))
+	if(scenefile.HasMember("width"))
 	{
-		width = scenefile["window"]["width"].GetInt();
+		width = scenefile["width"].GetInt();
 		cout << "width = " << width << endl;
 	}
-	if(scenefile["window"].HasMember("height"))
+	if(scenefile.HasMember("height"))
 	{
-		height = scenefile["window"]["height"].GetInt();
+		height = scenefile["height"].GetInt();
 		cout << "height = " << height << endl;
 	}
 
@@ -74,6 +73,13 @@ void Window::Init(Document& scenefile)
 	glutInitWindowSize(size[0], size[1]);
 	glutInitWindowPosition(location[0], location[1]);
 	glutCreateWindow("Human Skeleton AI Tool");
+
+	glShadeModel(GL_SMOOTH);
+	glClearDepth(1.0f);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 }
 
 void Window::Update()

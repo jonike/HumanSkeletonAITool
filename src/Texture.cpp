@@ -17,7 +17,7 @@ Texture::~Texture()
 
 }
 
-void Texture::Init(Document& scenefile)
+void Texture::Init(const Value& scenefile)
 {
 	//texture handle(s)
 	glGenTextures(1, &texture);

@@ -10,22 +10,25 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "Camera.h"
 #include "Viewport.h"
 #include "JSONReader.h"
+#include "SceneObject.h"
 
 class Scene
 {
 public:
+	string name;
 	Camera* camera;
 	Viewport* viewport;
-	string name;
+	vector<SceneObject> sceneobjects;
 
 	Scene();
 
 	~Scene();
 
-	void Init(Document& scenefile);
+	void Init(const Value& scenefile);
 
 	void Update();
 

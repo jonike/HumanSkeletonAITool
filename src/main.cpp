@@ -67,12 +67,12 @@ int main(int argc, char** argv)
 	if(scenefile["window"].IsObject())
 	{
 		window = new Window(argc, argv);
-		window->Init(scenefile);
+		window->Init(scenefile["window"]);
 	}
 	if(scenefile["scene"].IsObject())
 	{
 		scene = new Scene();
-		scene->Init(scenefile);
+		scene->Init(scenefile["scene"]);
 	}
 
 	texture = new Texture();

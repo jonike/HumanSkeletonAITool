@@ -21,31 +21,31 @@ Viewport::~Viewport()
 		delete[] size;
 }
 
-void Viewport::Init(Document& scenefile)
+void Viewport::Init(const Value& scenefile)
 {
 	int x, y = 0;
 	int width = 800, height = 600;
 
 	cout << "Viewport = {" << endl;
 
-	if(scenefile["scene"]["viewport"].HasMember("x"))
+	if(scenefile.HasMember("x"))
 	{
-		x = scenefile["scene"]["viewport"]["x"].GetInt();
+		x = scenefile["x"].GetInt();
 		cout << "x = " << x << endl;
 	}
-	if(scenefile["scene"]["viewport"].HasMember("y"))
+	if(scenefile.HasMember("y"))
 	{
-		y = scenefile["scene"]["viewport"]["y"].GetInt();
+		y = scenefile["y"].GetInt();
 		cout << "y = " << y << endl;
 	}
-	if(scenefile["scene"]["viewport"].HasMember("width"))
+	if(scenefile.HasMember("width"))
 	{
-		width = scenefile["scene"]["viewport"]["width"].GetInt();
+		width = scenefile["width"].GetInt();
 		cout << "width = " << width << endl;
 	}
-	if(scenefile["scene"]["viewport"].HasMember("height"))
+	if(scenefile.HasMember("height"))
 	{
-		height = scenefile["scene"]["viewport"]["height"].GetInt();
+		height = scenefile["height"].GetInt();
 		cout << "height = " << height << endl;
 	}
 

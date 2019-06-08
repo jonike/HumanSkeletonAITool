@@ -22,7 +22,7 @@ Camera::~Camera()
 		delete[] up;
 }
 
-void Camera::Init(Document& scenefile)
+void Camera::Init(const Value& scenefile)
 {
 	//defaults
 	location = new float[3] {0.0f, 0.0f, 10.0f};
@@ -33,14 +33,13 @@ void Camera::Init(Document& scenefile)
 	zNear = 0.1f;
 	zFar = 100.0f;
 
-	scenefile["scene"]["camera"].GetObject();
 	cout << "Camera = {" << endl;
 
-	if(scenefile["scene"]["camera"].HasMember("location"))
+	if(scenefile.HasMember("location"))
 	{
 		cout << "Location = {" << endl;
 		int i = 0;
-		for (auto& v : scenefile["scene"]["camera"]["location"].GetArray())
+		for (auto& v : scenefile["location"].GetArray())
 		{
 		    location[i] = v.GetFloat();
 		    i++;
@@ -48,11 +47,11 @@ void Camera::Init(Document& scenefile)
 		cout << location[0] << "\t" << location[1] << "\t" << location[2] << endl;
 		cout << "} End Location" << endl;
 	}
-	if(scenefile["scene"]["camera"].HasMember("direction"))
+	if(scenefile.HasMember("direction"))
 	{
 		cout << "Direction = {" << endl;
 		int i = 0;
-		for (auto& v : scenefile["scene"]["camera"]["direction"].GetArray())
+		for (auto& v : scenefile["direction"].GetArray())
 		{
 			direction[i] = v.GetFloat();
 			i++;
@@ -60,11 +59,11 @@ void Camera::Init(Document& scenefile)
 		cout << direction[0] << "\t" << direction[1] << "\t" << direction[2] << endl;
 		cout << "} End Direction" << endl;
 	}
-	if(scenefile["scene"]["camera"].HasMember("up"))
+	if(scenefile.HasMember("up"))
 	{
 		cout << "Up = {" << endl;
 		int i = 0;
-		for (auto& v : scenefile["scene"]["camera"]["up"].GetArray())
+		for (auto& v : scenefile["up"].GetArray())
 		{
 			up[i] = v.GetFloat();
 			i++;
@@ -72,24 +71,24 @@ void Camera::Init(Document& scenefile)
 		cout << up[0] << "\t" << up[1] << "\t" << up[2] << endl;
 		cout << "} End Up" << endl;
 	}
-	if(scenefile["scene"]["camera"].HasMember("fov"))
+	if(scenefile.HasMember("fov"))
 	{
-		fov = scenefile["scene"]["camera"]["fov"].GetFloat();
+		fov = scenefile["fov"].GetFloat();
 		cout << "FOV = " << fov << endl;
 	}
-	if(scenefile["scene"]["camera"].HasMember("aspect"))
+	if(scenefile.HasMember("aspect"))
 	{
-		aspect = scenefile["scene"]["camera"]["aspect"].GetFloat();
+		aspect = scenefile["aspect"].GetFloat();
 		cout << "Aspect = " << aspect << endl;
 	}
-	if(scenefile["scene"]["camera"].HasMember("zNear"))
+	if(scenefile.HasMember("zNear"))
 	{
-		zNear = scenefile["scene"]["camera"]["zNear"].GetFloat();
+		zNear = scenefile["zNear"].GetFloat();
 		cout << "zNear = " << zNear << endl;
 	}
-	if(scenefile["scene"]["camera"].HasMember("zFar"))
+	if(scenefile.HasMember("zFar"))
 	{
-		zFar = scenefile["scene"]["camera"]["zFar"].GetFloat();
+		zFar = scenefile["zFar"].GetFloat();
 		cout << "zFar = " << zFar << endl;
 	}
 

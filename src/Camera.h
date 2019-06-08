@@ -34,7 +34,7 @@ public:
 
 	~Camera();
 
-	void Init(Document& scenefile);
+	void Init(const Value& scenefile);
 
 	void Update();
 

@@ -22,7 +22,7 @@ public:
 	~Texture();
 
 	void Load(string file);
-	void Init(Document& scenefile);
+	void Init(const Value& scenefile);
 	void Update();
 	void Render();
 	void Shutdown();

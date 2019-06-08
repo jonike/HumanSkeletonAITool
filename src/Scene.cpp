@@ -17,25 +17,33 @@ Scene::~Scene()
 
 }
 
-void Scene::Init(Document& scenefile)
+void Scene::Init(const Value& scenefile)
 {
-	scenefile["scene"].GetObject();
 	cout << "Scene = {" << endl;
 
-	if(scenefile["scene"].HasMember("name"))
+	if(scenefile.HasMember("name"))
 	{
-		name = scenefile["scene"]["name"].GetString();
+		name = scenefile["name"].GetString();
 		cout << "Name = " << name << endl;
 	}
-	if(scenefile["scene"].HasMember("camera"))
+	if(scenefile.HasMember("camera"))
 	{
 		this->camera = new Camera();
-		this->camera->Init(scenefile);
+		this->camera->Init(scenefile["camera"]);
 	}
-	if(scenefile["scene"].HasMember("viewport"))
+	if(scenefile.HasMember("viewport"))
 	{
 		this->viewport = new Viewport();
-		this->viewport->Init(scenefile);
+		this->viewport->Init(scenefile["viewport"]);
+	}
+	if(scenefile.HasMember("sceneobjects"))
+	{
+		const Value& jsonsceneobjects = scenefile["sceneobjects"];
+		for (Value::ConstValueIterator itr = jsonsceneobjects.Begin(); itr != jsonsceneobjects.End(); ++itr) {
+			SceneObject sceneobject = SceneObject();
+			sceneobject.Init((*itr));
+			this->sceneobjects.push_back(sceneobject);
+		}
 	}
 
 	cout << "} End Scene" << endl;

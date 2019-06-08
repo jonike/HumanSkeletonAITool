@@ -25,7 +25,7 @@ public:
 	Window(int argc, char** argv);
 	~Window();
 
-	void Init(Document& scenefile);
+	void Init(const Value& scenefile);
 	void Update();
 	void Render();
 	void Shutdown();
