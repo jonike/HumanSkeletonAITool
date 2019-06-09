@@ -61,7 +61,7 @@ void keyboard(unsigned char key, int x, int y)
 int main(int argc, char** argv)
 {
 	JSONReader* json = new JSONReader(".//resource/scene.json");
-	Document scenefile = json->Read();
+	rapidjson::Document scenefile = json->Read();
 	if(scenefile == NULL) return 0;
 
 	if(scenefile["window"].IsObject())

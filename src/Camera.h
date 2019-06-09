@@ -34,7 +34,7 @@ public:
 
 	~Camera();
 
-	void Init(const Value& scenefile);
+	void Init(const rapidjson::Value& scenefile);
 
 	void Update();
 

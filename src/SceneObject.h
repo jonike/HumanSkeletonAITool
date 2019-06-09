@@ -9,21 +9,23 @@
 #define SCENEOBJECT_H_
 
 #include <GL/glut.h>
+#include "tiny_obj_loader.h"
 #include "JSONReader.h"
+
 
 class SceneObject
 {
 public:
 	int* location;
-	string name;
-	string texturefile;
-	string geometryfile;
+	std::string name;
+	std::string texturefile;
+	std::string geometryfile;
 
 	SceneObject();
 	SceneObject(int argc, char** argv);
 	~SceneObject();
 
-	void Init(const Value& jsonobject);
+	void Init(const rapidjson::Value& jsonobject);
 	void Update();
 	void Render();
 	void Shutdown();
@@ -35,4 +37,4 @@ protected:
 
 
 
-#endif /* WINDOW_H_ */
+#endif /* SCENEOBJECT_H */

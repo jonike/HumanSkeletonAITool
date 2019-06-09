@@ -21,8 +21,8 @@ public:
 	Texture();
 	~Texture();
 
-	void Load(string file);
-	void Init(const Value& scenefile);
+	void Load(std::string file);
+	void Init(const rapidjson::Value& scenefile);
 	void Update();
 	void Render();
 	void Shutdown();

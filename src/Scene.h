@@ -8,27 +8,23 @@
 #ifndef SCENE_H_
 #define SCENE_H_
 
-#include <iostream>
-#include <string>
-#include <vector>
 #include "Camera.h"
 #include "Viewport.h"
-#include "JSONReader.h"
 #include "SceneObject.h"
 
 class Scene
 {
 public:
-	string name;
+	std::string name;
 	Camera* camera;
 	Viewport* viewport;
-	vector<SceneObject> sceneobjects;
+	std::vector<SceneObject> sceneobjects;
 
 	Scene();
 
 	~Scene();
 
-	void Init(const Value& scenefile);
+	void Init(const rapidjson::Value& scenefile);
 
 	void Update();
 

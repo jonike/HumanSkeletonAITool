@@ -37,8 +37,8 @@
 		},
 		"sceneobjects": [{
 			"name": "ImageRectangle",
-			"texturefile": "000342_mpii_test_000000.jpg",
-			"geometryfile": "Image.obj"
+			"texturefile": "./resource/000342_mpii_test_000000.jpg",
+			"geometryfile": "./resource/Image.obj"
 		}]
 	}
 }

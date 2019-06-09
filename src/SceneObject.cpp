@@ -26,31 +26,75 @@ SceneObject::~SceneObject()
 		delete[] location;
 }
 
-void SceneObject::Init(const Value& jsonobject)
+void SceneObject::Init(const rapidjson::Value& jsonobject)
 {
 	int x = 0, y = 0;
 
-	cout << "SceneObject = {" << endl;
+	std::cout << "SceneObject = {" << std::endl;
 
 	if(jsonobject.HasMember("name"))
 	{
 		this->name = jsonobject["name"].GetString();
-		cout << "name = " << this->name << endl;
+		std::cout << "name = " << this->name << std::endl;
 	}
 	if(jsonobject.HasMember("texturefile"))
 	{
 		this->texturefile = jsonobject["texturefile"].GetString();
-		cout << "texturefile = " << this->texturefile << endl;
+		std::cout << "texturefile = " << this->texturefile << std::endl;
 	}
 	if(jsonobject.HasMember("geometryfile"))
 	{
 		this->geometryfile = jsonobject["geometryfile"].GetString();
-		cout << "geometryfile = " << this->geometryfile << endl;
+		std::cout << "geometryfile = " << this->geometryfile << std::endl;
 	}
 
-	cout << "} End SceneObject " << endl;
+	std::cout << "} End SceneObject " << std::endl;
 
 	location = new int[2] {x, y};
+
+	if(this->geometryfile != "")
+	{
+		tinyobj::attrib_t attrib;
+		std::vector<tinyobj::shape_t> shapes;
+		std::vector<tinyobj::material_t> materials;
+		std::string warn, err;
+
+		if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, this->geometryfile.c_str())) {
+			throw std::runtime_error(warn + err);
+		}
+
+		for (size_t s = 0; s < shapes.size(); s++) {
+		  // Loop over faces(polygon)
+		  size_t index_offset = 0;
+		  for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++) {
+		    int fv = shapes[s].mesh.num_face_vertices[f];
+
+		    // Loop over vertices in the face.
+		    for (size_t v = 0; v < fv; v++) {
+		      // access to vertex
+		      tinyobj::index_t idx = shapes[s].mesh.indices[index_offset + v];
+		      tinyobj::real_t vx = attrib.vertices[3*idx.vertex_index+0];
+		      tinyobj::real_t vy = attrib.vertices[3*idx.vertex_index+1];
+		      tinyobj::real_t vz = attrib.vertices[3*idx.vertex_index+2];
+		      tinyobj::real_t nx = attrib.normals[3*idx.normal_index+0];
+		      tinyobj::real_t ny = attrib.normals[3*idx.normal_index+1];
+		      tinyobj::real_t nz = attrib.normals[3*idx.normal_index+2];
+		      tinyobj::real_t tx = attrib.texcoords[2*idx.texcoord_index+0];
+		      tinyobj::real_t ty = attrib.texcoords[2*idx.texcoord_index+1];
+		      // Optional: vertex colors
+		      // tinyobj::real_t red = attrib.colors[3*idx.vertex_index+0];
+		      // tinyobj::real_t green = attrib.colors[3*idx.vertex_index+1];
+		      // tinyobj::real_t blue = attrib.colors[3*idx.vertex_index+2];
+
+		      std::cout << vx << '\t' << vy << '\t' << vz << std::endl;
+		    }
+		    index_offset += fv;
+
+		    // per-face material
+		    shapes[s].mesh.material_ids[f];
+		  }
+		}
+	}
 }
 
 void SceneObject::Update()

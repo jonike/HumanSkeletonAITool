@@ -17,14 +17,14 @@ Scene::~Scene()
 
 }
 
-void Scene::Init(const Value& scenefile)
+void Scene::Init(const rapidjson::Value& scenefile)
 {
-	cout << "Scene = {" << endl;
+	std::cout << "Scene = {" << std::endl;
 
 	if(scenefile.HasMember("name"))
 	{
 		name = scenefile["name"].GetString();
-		cout << "Name = " << name << endl;
+		std::cout << "Name = " << name << std::endl;
 	}
 	if(scenefile.HasMember("camera"))
 	{
@@ -38,15 +38,15 @@ void Scene::Init(const Value& scenefile)
 	}
 	if(scenefile.HasMember("sceneobjects"))
 	{
-		const Value& jsonsceneobjects = scenefile["sceneobjects"];
-		for (Value::ConstValueIterator itr = jsonsceneobjects.Begin(); itr != jsonsceneobjects.End(); ++itr) {
+		const rapidjson::Value& jsonsceneobjects = scenefile["sceneobjects"];
+		for (rapidjson::Value::ConstValueIterator itr = jsonsceneobjects.Begin(); itr != jsonsceneobjects.End(); ++itr) {
 			SceneObject sceneobject = SceneObject();
 			sceneobject.Init((*itr));
 			this->sceneobjects.push_back(sceneobject);
 		}
 	}
 
-	cout << "} End Scene" << endl;
+	std::cout << "} End Scene" << std::endl;
 
 }
 

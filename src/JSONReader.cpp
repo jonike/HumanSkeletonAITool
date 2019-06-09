@@ -1,6 +1,6 @@
 #include "JSONReader.h"
 
-JSONReader::JSONReader(string file)
+JSONReader::JSONReader(std::string file)
 {
 	filename = file;
 }
@@ -9,16 +9,16 @@ JSONReader::~JSONReader()
 {
 }
 
-Document JSONReader::Read()
+rapidjson::Document JSONReader::Read()
 {
-	ifstream infile;
-	string line;
-	string file;
+	std::ifstream infile;
+	std::string line;
+	std::string file;
 
 	infile.open(filename);
 
 	if(!infile) {
-		cerr << "Unable to open file " + filename;
+		std::cerr << "Unable to open file " + filename;
 		return NULL;
 	}
 
@@ -28,7 +28,7 @@ Document JSONReader::Read()
 
 	infile.close();
 
-	Document d;
+	rapidjson::Document d;
 	d.Parse(file.c_str());
 
 	return d;
@@ -39,7 +39,7 @@ void JSONReader::Serialize()
 
 }
 
-void JSONReader::Deserialize(string content)
+void JSONReader::Deserialize(std::string content)
 {
 
 }

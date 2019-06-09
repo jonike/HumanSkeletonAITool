@@ -17,7 +17,7 @@ Texture::~Texture()
 
 }
 
-void Texture::Init(const Value& scenefile)
+void Texture::Init(const rapidjson::Value& scenefile)
 {
 	//texture handle(s)
 	glGenTextures(1, &texture);
@@ -43,14 +43,14 @@ void Texture::Init(const Value& scenefile)
 	}
 	else
 	{
-		cout << "Failed to load image." << endl;
+		std::cout << "Failed to load image." << std::endl;
 	}
 	stbi_image_free(data);
 
 	glEnable(GL_TEXTURE_2D);
 }
 
-void Texture::Load(string file)
+void Texture::Load(std::string file)
 {
 
 }

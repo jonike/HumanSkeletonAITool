@@ -22,7 +22,7 @@ Camera::~Camera()
 		delete[] up;
 }
 
-void Camera::Init(const Value& scenefile)
+void Camera::Init(const rapidjson::Value& scenefile)
 {
 	//defaults
 	location = new float[3] {0.0f, 0.0f, 10.0f};
@@ -33,66 +33,66 @@ void Camera::Init(const Value& scenefile)
 	zNear = 0.1f;
 	zFar = 100.0f;
 
-	cout << "Camera = {" << endl;
+	std::cout << "Camera = {" << std::endl;
 
 	if(scenefile.HasMember("location"))
 	{
-		cout << "Location = {" << endl;
+		std::cout << "Location = {" << std::endl;
 		int i = 0;
 		for (auto& v : scenefile["location"].GetArray())
 		{
 		    location[i] = v.GetFloat();
 		    i++;
 		}
-		cout << location[0] << "\t" << location[1] << "\t" << location[2] << endl;
-		cout << "} End Location" << endl;
+		std::cout << location[0] << "\t" << location[1] << "\t" << location[2] << std::endl;
+		std::cout << "} End Location" << std::endl;
 	}
 	if(scenefile.HasMember("direction"))
 	{
-		cout << "Direction = {" << endl;
+		std::cout << "Direction = {" << std::endl;
 		int i = 0;
 		for (auto& v : scenefile["direction"].GetArray())
 		{
 			direction[i] = v.GetFloat();
 			i++;
 		}
-		cout << direction[0] << "\t" << direction[1] << "\t" << direction[2] << endl;
-		cout << "} End Direction" << endl;
+		std::cout << direction[0] << "\t" << direction[1] << "\t" << direction[2] << std::endl;
+		std::cout << "} End Direction" << std::endl;
 	}
 	if(scenefile.HasMember("up"))
 	{
-		cout << "Up = {" << endl;
+		std::cout << "Up = {" << std::endl;
 		int i = 0;
 		for (auto& v : scenefile["up"].GetArray())
 		{
 			up[i] = v.GetFloat();
 			i++;
 		}
-		cout << up[0] << "\t" << up[1] << "\t" << up[2] << endl;
-		cout << "} End Up" << endl;
+		std::cout << up[0] << "\t" << up[1] << "\t" << up[2] << std::endl;
+		std::cout << "} End Up" << std::endl;
 	}
 	if(scenefile.HasMember("fov"))
 	{
 		fov = scenefile["fov"].GetFloat();
-		cout << "FOV = " << fov << endl;
+		std::cout << "FOV = " << fov << std::endl;
 	}
 	if(scenefile.HasMember("aspect"))
 	{
 		aspect = scenefile["aspect"].GetFloat();
-		cout << "Aspect = " << aspect << endl;
+		std::cout << "Aspect = " << aspect << std::endl;
 	}
 	if(scenefile.HasMember("zNear"))
 	{
 		zNear = scenefile["zNear"].GetFloat();
-		cout << "zNear = " << zNear << endl;
+		std::cout << "zNear = " << zNear << std::endl;
 	}
 	if(scenefile.HasMember("zFar"))
 	{
 		zFar = scenefile["zFar"].GetFloat();
-		cout << "zFar = " << zFar << endl;
+		std::cout << "zFar = " << zFar << std::endl;
 	}
 
-	cout << "} End Camera" << endl;
+	std::cout << "} End Camera" << std::endl;
 }
 
 void Camera::Update()

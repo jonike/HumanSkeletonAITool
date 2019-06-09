@@ -5,14 +5,11 @@
  *      Author: mark
  */
 
-#include <iostream>
-#include <GL/glut.h>
-#include "JSONReader.h"
+#ifndef MAIN_H_
+#define MAIN_H_
+
 #include "Scene.h"
-#include "Texture.h"
 #include "Window.h"
+#include "Texture.h"
 
-using namespace std;
-using namespace rapidjson;
-
-
+#endif /* MAIN_H_ */

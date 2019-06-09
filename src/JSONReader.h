@@ -15,22 +15,19 @@
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
 
-using namespace std;
-using namespace rapidjson;
-
 class JSONReader
 {
 public:
-	string filename;
-	string content;
+	std::string filename;
+	std::string content;
 
-	JSONReader(string file);
+	JSONReader(std::string file);
 
-	Document Read();
+	rapidjson::Document Read();
 
 	void Serialize();
 
-	void Deserialize(string content);
+	void Deserialize(std::string content);
 
 	~JSONReader();
 

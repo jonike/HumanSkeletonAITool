@@ -33,37 +33,37 @@ Window::~Window()
 		delete[] size;
 }
 
-void Window::Init(const Value& scenefile)
+void Window::Init(const rapidjson::Value& scenefile)
 {
 	int x = 200;
 	int y = 200;
 	int width = 640;
 	int height = 480;
 
-	cout << "Window = {" << endl;
+	std::cout << "Window = {" << std::endl;
 
 	if(scenefile.HasMember("x"))
 	{
 		x = scenefile["x"].GetInt();
-		cout << "x = " << x << endl;
+		std::cout << "x = " << x << std::endl;
 	}
 	if(scenefile.HasMember("y"))
 	{
 		y = scenefile["y"].GetInt();
-		cout << "y = " << y << endl;
+		std::cout << "y = " << y << std::endl;
 	}
 	if(scenefile.HasMember("width"))
 	{
 		width = scenefile["width"].GetInt();
-		cout << "width = " << width << endl;
+		std::cout << "width = " << width << std::endl;
 	}
 	if(scenefile.HasMember("height"))
 	{
 		height = scenefile["height"].GetInt();
-		cout << "height = " << height << endl;
+		std::cout << "height = " << height << std::endl;
 	}
 
-	cout << "} End Window " << endl;
+	std::cout << "} End Window " << std::endl;
 
 	location = new int[2] {x, y};
 	size = new int[2] { width, height };

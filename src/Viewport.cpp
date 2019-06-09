@@ -21,35 +21,35 @@ Viewport::~Viewport()
 		delete[] size;
 }
 
-void Viewport::Init(const Value& scenefile)
+void Viewport::Init(const rapidjson::Value& scenefile)
 {
 	int x, y = 0;
 	int width = 800, height = 600;
 
-	cout << "Viewport = {" << endl;
+	std::cout << "Viewport = {" << std::endl;
 
 	if(scenefile.HasMember("x"))
 	{
 		x = scenefile["x"].GetInt();
-		cout << "x = " << x << endl;
+		std::cout << "x = " << x << std::endl;
 	}
 	if(scenefile.HasMember("y"))
 	{
 		y = scenefile["y"].GetInt();
-		cout << "y = " << y << endl;
+		std::cout << "y = " << y << std::endl;
 	}
 	if(scenefile.HasMember("width"))
 	{
 		width = scenefile["width"].GetInt();
-		cout << "width = " << width << endl;
+		std::cout << "width = " << width << std::endl;
 	}
 	if(scenefile.HasMember("height"))
 	{
 		height = scenefile["height"].GetInt();
-		cout << "height = " << height << endl;
+		std::cout << "height = " << height << std::endl;
 	}
 
-	cout << "} End Viewport" << endl;
+	std::cout << "} End Viewport" << std::endl;
 
 	location = new int[2] {x, y};
 	size = new int[2] { width, height };
