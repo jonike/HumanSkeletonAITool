@@ -18,6 +18,7 @@ class Texture
 public:
 	unsigned int texture;
 	std::string file;
+	int* size;
 
 	Texture();
 	~Texture();

@@ -40,7 +40,12 @@
 					"file": "./resource/000342_mpii_test_000000.jpg"
 				},
 				"geometryfile": "./resource/Image.obj"
-			}]
+			},
+			{
+				"name": "Skeleton",
+				"geometryfile": "./resource/Bones.obj"
+			}
+			]
 		}
 	}
 

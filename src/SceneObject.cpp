@@ -12,6 +12,7 @@ SceneObject::SceneObject()
 	location = nullptr;
 	argc = 0;
 	argv = nullptr;
+	texture = nullptr;
 }
 
 SceneObject::SceneObject(int argc, char** argv) : SceneObject()
@@ -39,8 +40,8 @@ void SceneObject::Init(const rapidjson::Value& jsonobject)
 	}
 	if(jsonobject.HasMember("texture"))
 	{
-		texture = new Texture();
-		texture->Init(jsonobject["texture"]);
+		this->texture = new Texture();
+		this->texture->Init(jsonobject["texture"]);
 	}
 	if(jsonobject.HasMember("geometryfile"))
 	{
@@ -54,45 +55,11 @@ void SceneObject::Init(const rapidjson::Value& jsonobject)
 
 	if(this->geometryfile != "")
 	{
-		tinyobj::attrib_t attrib;
-		std::vector<tinyobj::shape_t> shapes;
-		std::vector<tinyobj::material_t> materials;
 		std::string warn, err;
 
-		if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, this->geometryfile.c_str())) {
+		//need to set triangulate to false or else it will only load objects as triangle meshes despite being in quad format
+		if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, this->geometryfile.c_str(), nullptr, false)) {
 			throw std::runtime_error(warn + err);
-		}
-
-		for (size_t s = 0; s < shapes.size(); s++) {
-		  // Loop over faces(polygon)
-		  size_t index_offset = 0;
-		  for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++) {
-		    int fv = shapes[s].mesh.num_face_vertices[f];
-
-		    // Loop over vertices in the face.
-		    for (size_t v = 0; v < fv; v++) {
-		      // access to vertex
-		      tinyobj::index_t idx = shapes[s].mesh.indices[index_offset + v];
-		      tinyobj::real_t vx = attrib.vertices[3*idx.vertex_index+0];
-		      tinyobj::real_t vy = attrib.vertices[3*idx.vertex_index+1];
-		      tinyobj::real_t vz = attrib.vertices[3*idx.vertex_index+2];
-		      tinyobj::real_t nx = attrib.normals[3*idx.normal_index+0];
-		      tinyobj::real_t ny = attrib.normals[3*idx.normal_index+1];
-		      tinyobj::real_t nz = attrib.normals[3*idx.normal_index+2];
-		      tinyobj::real_t tx = attrib.texcoords[2*idx.texcoord_index+0];
-		      tinyobj::real_t ty = attrib.texcoords[2*idx.texcoord_index+1];
-		      // Optional: vertex colors
-		      // tinyobj::real_t red = attrib.colors[3*idx.vertex_index+0];
-		      // tinyobj::real_t green = attrib.colors[3*idx.vertex_index+1];
-		      // tinyobj::real_t blue = attrib.colors[3*idx.vertex_index+2];
-
-		      std::cout << vx << '\t' << vy << '\t' << vz << std::endl;
-		    }
-		    index_offset += fv;
-
-		    // per-face material
-		    shapes[s].mesh.material_ids[f];
-		  }
 		}
 	}
 }
@@ -107,20 +74,44 @@ void SceneObject::Render()
 	//glRotatef(angle, 0.0f, 1.0f, 0.0f);
 
 	//glColor3f(1.0f,1.0f,1.0f);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture->texture);
+	if(texture != nullptr)
+	{
+		glEnable(GL_TEXTURE_2D);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texture->texture);
+	}
+	else
+	{
+		glColor3f(0.4f, 0.4f, 0.4f);
+	}
 
-	glColor3f(1.0f, 1.0f, 1.0f);
-	glBegin(GL_TRIANGLE_STRIP);
-		glTexCoord2f(0.0f, 1.0f);
-		glVertex3f(-1.0f, 1.0f, 0.0);
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex3f(-1.0f,-1.0f, 0.0f);
-		glTexCoord2f(1.0f, 1.0f);
-		glVertex3f( 1.0f, 1.0f, 0.0);
-		glTexCoord2f(1.0f, 0.0f);
-		glVertex3f( 1.0f, -1.0f, 0.0);
-	glEnd();
+
+
+	for (size_t s = 0; s < shapes.size(); s++) {
+		// Loop over faces(polygon)
+		size_t index_offset = 0;
+		for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++) {
+
+			int fv = shapes[s].mesh.num_face_vertices[f];
+
+			glBegin(fv == 3 ? GL_TRIANGLES : GL_QUADS);
+
+			// Loop over vertices in the face.
+			for (size_t v = 0; v < fv; v++) {
+				// access to vertex
+				tinyobj::index_t idx = shapes[s].mesh.indices[index_offset + v];
+				if(texture != nullptr) glTexCoord2f(attrib.texcoords[2*idx.texcoord_index+0], attrib.texcoords[2*idx.texcoord_index+1]);
+				glNormal3f(attrib.normals[3*idx.normal_index+0], attrib.normals[3*idx.normal_index+1], attrib.normals[3*idx.normal_index+2]);
+				glVertex3f(attrib.vertices[3*idx.vertex_index+0], attrib.vertices[3*idx.vertex_index+1], attrib.vertices[3*idx.vertex_index+2]);
+			}
+			index_offset += fv;
+
+			glEnd();
+		}
+	}
+
+
+	glDisable(GL_TEXTURE_2D);
 }
 
 void SceneObject::Shutdown()

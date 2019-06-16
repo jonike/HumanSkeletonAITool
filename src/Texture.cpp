@@ -9,7 +9,7 @@
 
 Texture::Texture()
 {
-
+	size = nullptr;
 }
 
 Texture::~Texture()
@@ -44,6 +44,8 @@ void Texture::Init(const rapidjson::Value& jsonobject)
 
 		if(data)
 		{
+			size = new int[2]{width, height};
+
 			GLenum format = nrChannels == 3 ? GL_RGB : GL_RGBA;
 			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 			//mipmap level 0, RGB data values, width and height of the texture, 0 (legacy param), format of source image, datatype of source image, image data
@@ -54,8 +56,6 @@ void Texture::Init(const rapidjson::Value& jsonobject)
 			std::cout << "Failed to load image." << std::endl;
 		}
 		stbi_image_free(data);
-
-		glEnable(GL_TEXTURE_2D);
 	}
 }
 
