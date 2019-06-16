@@ -37,10 +37,10 @@ void SceneObject::Init(const rapidjson::Value& jsonobject)
 		this->name = jsonobject["name"].GetString();
 		std::cout << "name = " << this->name << std::endl;
 	}
-	if(jsonobject.HasMember("texturefile"))
+	if(jsonobject.HasMember("texture"))
 	{
-		this->texturefile = jsonobject["texturefile"].GetString();
-		std::cout << "texturefile = " << this->texturefile << std::endl;
+		texture = new Texture();
+		texture->Init(jsonobject["texture"]);
 	}
 	if(jsonobject.HasMember("geometryfile"))
 	{
@@ -104,7 +104,23 @@ void SceneObject::Update()
 
 void SceneObject::Render()
 {
+	//glRotatef(angle, 0.0f, 1.0f, 0.0f);
 
+	//glColor3f(1.0f,1.0f,1.0f);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture->texture);
+
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glBegin(GL_TRIANGLE_STRIP);
+		glTexCoord2f(0.0f, 1.0f);
+		glVertex3f(-1.0f, 1.0f, 0.0);
+		glTexCoord2f(0.0f, 0.0f);
+		glVertex3f(-1.0f,-1.0f, 0.0f);
+		glTexCoord2f(1.0f, 1.0f);
+		glVertex3f( 1.0f, 1.0f, 0.0);
+		glTexCoord2f(1.0f, 0.0f);
+		glVertex3f( 1.0f, -1.0f, 0.0);
+	glEnd();
 }
 
 void SceneObject::Shutdown()

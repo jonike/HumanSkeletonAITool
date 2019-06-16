@@ -9,6 +9,7 @@
 #define WINDOW_H_
 
 #include <GL/glut.h>
+#include "Scene.h"
 #include "JSONReader.h"
 
 class Window
@@ -16,10 +17,8 @@ class Window
 public:
 	int* location;
 	int* size;
-	void (* reshape)( int, int );
-	void (* display)( void );
-	void (* idle)( void );
-	void (* keyboard)( unsigned char key, int x, int y );
+
+	Scene* scene;
 
 	Window();
 	Window(int argc, char** argv);
@@ -30,19 +29,24 @@ public:
 	void Render();
 	void Shutdown();
 
-	void Reshape(void (* callback)( int, int ));
-	void Display(void (* callback)( void ));
-	void Idle(void (* callback)( void ));
-	void Keyboard(void (* callback)( unsigned char key, int x, int y ));
+	void Reshape(int width, int height);
+	void Keyboard(unsigned char key, int x, int y);
 
 	void MainLoop();
 
 	void Clear(GLbitfield mask);
 	void SwapBuffers();
 
+	static void displayWrapper();
+	static void reshapeWrapper(int width, int height);
+	static void keyboardWrapper(unsigned char key, int x, int y);
+	static void idleWrapper();
+
 protected:
 	int argc;
 	char** argv;
+
+	static Window *instance;
 };
 
 

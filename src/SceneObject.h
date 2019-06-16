@@ -11,6 +11,7 @@
 #include <GL/glut.h>
 #include "tiny_obj_loader.h"
 #include "JSONReader.h"
+#include "Texture.h"
 
 
 class SceneObject
@@ -18,8 +19,9 @@ class SceneObject
 public:
 	int* location;
 	std::string name;
-	std::string texturefile;
 	std::string geometryfile;
+
+	Texture* texture;
 
 	SceneObject();
 	SceneObject(int argc, char** argv);

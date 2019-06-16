@@ -3,42 +3,45 @@
 		"x": 100,
 		"y": 100,
 		"width": 800,
-		"height": 600
-	},
-	"scene": {
+		"height": 600,
+		"scene": {
 
-		"name": "Main",
-		"viewport": {
-			"x": 0,
-			"y": 0,
-			"width": 800,
-			"height": 600
-		},
-		"camera": {
-			"location": [
-				0.0,
-				0.0,
-				10.0
-			],
-			"direction": [
-				0.0,
-				0.0,
-				0.0
-			],
-			"up": [
-				0.0,
-				1.0,
-				0.0
-			],
-			"fov": 45.0,
-			"aspect": 1.333333,
-			"zNear": 0.1,
-			"zFar": 100.0
-		},
-		"sceneobjects": [{
-			"name": "ImageRectangle",
-			"texturefile": "./resource/000342_mpii_test_000000.jpg",
-			"geometryfile": "./resource/Image.obj"
-		}]
+			"name": "Main",
+			"viewport": {
+				"x": 0,
+				"y": 0,
+				"width": 800,
+				"height": 600
+			},
+			"camera": {
+				"location": [
+					0.0,
+					0.0,
+					10.0
+				],
+				"direction": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"up": [
+					0.0,
+					1.0,
+					0.0
+				],
+				"fov": 45.0,
+				"aspect": 1.333333,
+				"zNear": 0.1,
+				"zFar": 100.0
+			},
+			"sceneobjects": [{
+				"name": "ImageRectangle",
+				"texture": {
+					"file": "./resource/000342_mpii_test_000000.jpg"
+				},
+				"geometryfile": "./resource/Image.obj"
+			}]
+		}
 	}
+
 }

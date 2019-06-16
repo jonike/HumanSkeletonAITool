@@ -8,8 +8,6 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
-#include "Scene.h"
 #include "Window.h"
-#include "Texture.h"
 
 #endif /* MAIN_H_ */

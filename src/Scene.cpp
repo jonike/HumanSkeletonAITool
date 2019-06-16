@@ -57,7 +57,13 @@ void Scene::Update()
 
 void Scene::Render()
 {
+	// Set the camera
+	this->camera->LookAt();
 
+	for (auto &sceneobject : this->sceneobjects) // access by reference to avoid copying
+	{
+	    sceneobject.Render();
+	}
 }
 
 void Scene::Shutdown()

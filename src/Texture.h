@@ -17,12 +17,12 @@ class Texture
 {
 public:
 	unsigned int texture;
+	std::string file;
 
 	Texture();
 	~Texture();
 
-	void Load(std::string file);
-	void Init(const rapidjson::Value& scenefile);
+	void Init(const rapidjson::Value& jsonobject);
 	void Update();
 	void Render();
 	void Shutdown();
