@@ -110,15 +110,23 @@ void Camera::Shutdown()
 
 }
 
+void Camera::SetOrtho(double width, double height, double zNear, double zFar)
+{
+	// Use the Projection Matrix
+	glMatrixMode(GL_PROJECTION);
+
+	glLoadIdentity();
+
+	glOrtho((-width/2.0f), width/2.0f, -height/2.0f, height/2.0f, zNear, zFar);
+}
+
 void Camera::SetPerspective()
 {
     // Use the Projection Matrix
 	glMatrixMode(GL_PROJECTION);
 
-       // Reset Matrix
 	glLoadIdentity();
 
-	// Set the correct perspective.
 	gluPerspective(fov, aspect, zNear, zFar);
 }
 
@@ -130,7 +138,8 @@ void Camera::LookAt()
 	// Reset transformations
 	glLoadIdentity();
 
-	gluLookAt(	location[0], location[1], location[2],
+	/*gluLookAt(	location[0], location[1], location[2],
 				direction[0], direction[1],  direction[3],
-				up[0], up[1],  up[2]);
+				up[0], up[1],  up[2]);*/
+
 }

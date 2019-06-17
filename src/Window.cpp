@@ -79,6 +79,12 @@ void Window::Init(const rapidjson::Value& scenefile)
 		scene->Init(scenefile["scene"]);
 	}
 
+	for(auto &so : this->scene->sceneobjects)
+	{
+		if(so.doResize)
+			glutReshapeWindow(so.texture->size[0], so.texture->size[1]);
+	}
+
 	std::cout << "} End Window " << std::endl;
 
 	glShadeModel(GL_SMOOTH);
@@ -124,11 +130,12 @@ void Window::Reshape(int w, int h) {
 		h = 1;
 	float ratio =  w * 1.0 / h;
 
-	this->size = new int[2] { w, h };
+	this->size[0] = w;
+	this->size[1] = h;
 	scene->viewport->Set(0,  0,  w,  h);
 
 	scene->camera->aspect = ratio;
-	scene->camera->SetPerspective();
+	scene->camera->SetOrtho((double)w, (double)h, -100.0f, 100.0f);
 }
 
 

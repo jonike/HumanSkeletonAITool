@@ -42,6 +42,8 @@ public:
 
 	void Shutdown();
 
+	void SetOrtho(double width, double height, double zNear, double zFar);
+
 	void SetPerspective();
 
 	void LookAt();

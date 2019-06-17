@@ -26,6 +26,8 @@ public:
 	std::vector<tinyobj::material_t> materials;
 	Texture* texture;
 
+	bool doResize;
+
 	SceneObject();
 	SceneObject(int argc, char** argv);
 	~SceneObject();

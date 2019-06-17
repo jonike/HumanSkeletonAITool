@@ -13,6 +13,7 @@ SceneObject::SceneObject()
 	argc = 0;
 	argv = nullptr;
 	texture = nullptr;
+	doResize = false;
 }
 
 SceneObject::SceneObject(int argc, char** argv) : SceneObject()
@@ -48,6 +49,11 @@ void SceneObject::Init(const rapidjson::Value& jsonobject)
 		this->geometryfile = jsonobject["geometryfile"].GetString();
 		std::cout << "geometryfile = " << this->geometryfile << std::endl;
 	}
+	if(jsonobject.HasMember("resize"))
+	{
+		this->doResize = jsonobject["resize"].GetBool();
+		std::cout << "resize = " << this->doResize << std::endl;
+	}
 
 	std::cout << "} End SceneObject " << std::endl;
 
@@ -71,18 +77,22 @@ void SceneObject::Update()
 
 void SceneObject::Render()
 {
-	//glRotatef(angle, 0.0f, 1.0f, 0.0f);
+	glPushMatrix();
 
-	//glColor3f(1.0f,1.0f,1.0f);
 	if(texture != nullptr)
 	{
 		glEnable(GL_TEXTURE_2D);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture->texture);
+
+		glScalef((float)texture->size[0], (float)texture->size[1], 1.0f);
 	}
 	else
 	{
 		glColor3f(0.4f, 0.4f, 0.4f);
+		glScalef(10.0f, 10.0f, 5.0f);
+		glRotatef(90.0f, 0.0, 1.0, 0.0);
+		glRotatef(90.0f, 1.0, 0.0, 0.0);
 	}
 
 
@@ -110,8 +120,11 @@ void SceneObject::Render()
 		}
 	}
 
-
-	glDisable(GL_TEXTURE_2D);
+	if(texture != nullptr)
+	{
+		glDisable(GL_TEXTURE_2D);
+	}
+	glPopMatrix();
 }
 
 void SceneObject::Shutdown()
